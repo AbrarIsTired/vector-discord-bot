@@ -106,15 +106,22 @@ class Fun(commands.Cog):
         
         port_7777 = check_server('10.0.0.202', 7777)
         port_25565 = check_server('10.0.0.202', 25565)
-    
+        port_80 = check_server('10.0.0.26', 80)
+        port_22 = check_server('10.0.0.26', 22)
+        port_80_home = check_server('10.0.0.26', 80)
+        port_22_home = check_server('10.0.0.26', 22)
         embed = discord.Embed(
             title="🖥️ Server Status",
             description="Abrar's Game Server Status:",
             color=discord.Color.green()
         )
-    
+        embed.add_field(name="CasaOS Home: Port 80", value="✅ Online" if port_80_home else "❌ Offline", inline=True)
+        embed.add_field(name="SSH Home: Port 22", value="✅ Online" if port_22_home else "❌ Offline", inline=True)
         embed.add_field(name="Terraria: Port 7777", value="✅ Online" if port_7777 else "❌ Offline", inline=True)
         embed.add_field(name="Minecraft: Port 25565", value="✅ Online" if port_25565 else "❌ Offline", inline=True)
+        embed.add_field(name="CasaOS Game Server: Port 80", value="✅ Online" if port_80 else "❌ Offline", inline=True)
+        embed.add_field(name="SSH Game Server: Port 22", value="✅ Online" if port_22 else "❌ Offline", inline=True)
+
         await ctx.send(embed=embed)
 
     
