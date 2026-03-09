@@ -92,7 +92,7 @@ class Fun(commands.Cog):
             return
 
         if "vector" in message.content.lower():
-            await message.channel.send(f"Yo Commander, what do you want? I'm busy right now")
+            await message.channel.send(f"Yo Commander, what's up?")
 
     # Status Command to check server status of active game servers
     @commands.command()
@@ -103,41 +103,36 @@ class Fun(commands.Cog):
                 return True
             except:
                 return False
- # Dictionary storing server names and their corresponding IP + port
-        # Format: "Display Name": (IP, Port)
-        servers = {
+        # Dictionary storing server names and their corresponding IP + port
+        services = {
             "CasaOS Home (Port 80)": ("10.0.0.26", 80),
             "SSH Home (Port 22)": ("10.0.0.26", 22),
-            "Terraria (Port 7777)": ("10.0.0.202", 7777),
-            "Minecraft (Port 25565)": ("10.0.0.202", 25565),
             "CasaOS Game Server (Port 80)": ("10.0.0.202", 80),
             "SSH Game Server (Port 22)": ("10.0.0.202", 22),
+            "Terraria (Port 7777)": ("10.0.0.202", 7777),
+            "Minecraft Aether II (Port 25565)": ("10.0.0.202", 25565)
         }
 
-        # Creates a Discord embed (rich message format)
+        # Creates a Discord embed 
         embed = discord.Embed(
-            title="🖥️ Server Status",                     # Embed title
-            description="Abrar's Game Server Status:",    # Text below the title
-            color=discord.Color.green()                   # Left color bar
+            title="🖥️ Server Status",                     
+            description="Abrar's Game Server Status:",    
+            color=discord.Color.green()                   
         )
 
         # Loop through each server in the dictionary
-        for name, (host, port) in servers.items():
-
-            # Run the TCP connection check
+        for name, (host, port) in services.items():
             online = self.check_server(host, port)
 
-            # Convert boolean result into a readable message
+            # Convert output from check_server (Boolean) into a readable message
             status = "✅ Online" if online else "❌ Offline"
 
-            # Add a field to the embed showing the service name and its status
             embed.add_field(
                 name=name,
                 value=status,
                 inline=True
             )
 
-        # Send the embed to the Discord channel where the command was used
         await ctx.send(embed=embed)
 
     
