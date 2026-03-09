@@ -103,25 +103,41 @@ class Fun(commands.Cog):
                 return True
             except:
                 return False
-        
-        port_7777 = check_server('10.0.0.202', 7777)
-        port_25565 = check_server('10.0.0.202', 25565)
-        port_80 = check_server('10.0.0.26', 80)
-        port_22 = check_server('10.0.0.26', 22)
-        port_80_home = check_server('10.0.0.26', 80)
-        port_22_home = check_server('10.0.0.26', 22)
-        embed = discord.Embed(
-            title="🖥️ Server Status",
-            description="Abrar's Game Server Status:",
-            color=discord.Color.green()
-        )
-        embed.add_field(name="CasaOS Home: Port 80", value="✅ Online" if port_80_home else "❌ Offline", inline=True)
-        embed.add_field(name="SSH Home: Port 22", value="✅ Online" if port_22_home else "❌ Offline", inline=True)
-        embed.add_field(name="Terraria: Port 7777", value="✅ Online" if port_7777 else "❌ Offline", inline=True)
-        embed.add_field(name="Minecraft: Port 25565", value="✅ Online" if port_25565 else "❌ Offline", inline=True)
-        embed.add_field(name="CasaOS Game Server: Port 80", value="✅ Online" if port_80 else "❌ Offline", inline=True)
-        embed.add_field(name="SSH Game Server: Port 22", value="✅ Online" if port_22 else "❌ Offline", inline=True)
+ # Dictionary storing server names and their corresponding IP + port
+        # Format: "Display Name": (IP, Port)
+        servers = {
+            "CasaOS Home (Port 80)": ("10.0.0.26", 80),
+            "SSH Home (Port 22)": ("10.0.0.26", 22),
+            "Terraria (Port 7777)": ("10.0.0.202", 7777),
+            "Minecraft (Port 25565)": ("10.0.0.202", 25565),
+            "CasaOS Game Server (Port 80)": ("10.0.0.202", 80),
+            "SSH Game Server (Port 22)": ("10.0.0.202", 22),
+        }
 
+        # Creates a Discord embed (rich message format)
+        embed = discord.Embed(
+            title="🖥️ Server Status",                     # Embed title
+            description="Abrar's Game Server Status:",    # Text below the title
+            color=discord.Color.green()                   # Left color bar
+        )
+
+        # Loop through each server in the dictionary
+        for name, (host, port) in servers.items():
+
+            # Run the TCP connection check
+            online = self.check_server(host, port)
+
+            # Convert boolean result into a readable message
+            status = "✅ Online" if online else "❌ Offline"
+
+            # Add a field to the embed showing the service name and its status
+            embed.add_field(
+                name=name,
+                value=status,
+                inline=True
+            )
+
+        # Send the embed to the Discord channel where the command was used
         await ctx.send(embed=embed)
 
     
