@@ -99,8 +99,8 @@ class Fun(commands.Cog):
     async def status(self,ctx):
         def check_server(host, port):
             try:
-                socket.create_connection((host, port), timeout=2)
-                return True
+                with socket.create_connection((host, port), timeout=2):
+                    return True
             except:
                 return False
         # Dictionary storing server names and their corresponding IP + port
@@ -122,7 +122,7 @@ class Fun(commands.Cog):
 
         # Loop through each server in the dictionary
         for name, (host, port) in services.items():
-            online = self.check_server(host, port)
+            online = check_server(host, port)
 
             # Convert output from check_server (Boolean) into a readable message
             status = "✅ Online" if online else "❌ Offline"
