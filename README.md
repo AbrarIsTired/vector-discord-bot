@@ -7,7 +7,8 @@ A simple Discord bot made with discord.py featuring Vector, a character from the
 0) Clone the repository
 1) Install dependencies: pip install -r requirements.txt
 2) Create .env file with your DISCORD_TOKEN=your_token_here
-3) Run with python main.py
+3) (On Linux): Open a screen with screen -S discord_bot -> CD into Bot Directory -> source venv/bin/activate
+4) Run main.py
 
 ## Learning Goals
 
